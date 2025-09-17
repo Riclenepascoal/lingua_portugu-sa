@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste API Gemini</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #4a148c;
+            border-bottom: 2px solid #4a148c;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4a148c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #7b1fa2;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-left: 4px solid #4a148c;
+            min-height: 100px;
+        }
+        .loading {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+            color: #4a148c;
+        }
+        .error {
+            color: #f44336;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste da API Gemini</h1>
+    
+    <div class="form-group">
+        <label for="test-type">Tipo de Teste:</label>
+        <select id="test-type">
+            <option value="sentiment">Análise de Sentimento</option>
+            <option value="reading-tips">Dicas de Leitura</option>
+            <option value="chat">Chat com IA</option>
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="prompt">Mensagem/Prompt:</label>
+        <textarea id="prompt" rows="5" placeholder="Digite sua mensagem aqui..."></textarea>
+    </div>
+    
+    <button id="submit-btn">Enviar para API</button>
+    
+    <div id="loading" class="loading">
+        Processando... Por favor, aguarde.
+    </div>
+    
+    <div id="error" class="error"></div>
+    
+    <div class="form-group">
+        <label>Resposta da API:</label>
+        <div id="response" class="response"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitBtn = document.getElementById('submit-btn');
+            const promptInput = document.getElementById('prompt');
+            const testType = document.getElementById('test-type');
+            const responseDiv = document.getElementById('response');
+            const loadingDiv = document.getElementById('loading');
+            const errorDiv = document.getElementById('error');
+            
+            submitBtn.addEventListener('click', async function() {
+                const prompt = promptInput.value.trim();
+                const type = testType.value;
+                
+                if (!prompt) {
+                    errorDiv.textContent = 'Por favor, digite uma mensagem.';
+                    return;
+                }
+                
+                errorDiv.textContent = '';
+                responseDiv.textContent = '';
+                loadingDiv.style.display = 'block';
+                
+                try {
+                    let response;
+                    
+                    switch (type) {
+                        case 'sentiment':
+                            response = await fetch('http://localhost:4567/api/ai/sentiment', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ text: prompt })
+                            });
+                            break;
+                        case 'reading-tips':
+                            response = await fetch('http://localhost:4567/api/ai/reading-tips', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ emotionalState: prompt })
+                            });
+                            break;
+                        case 'chat':
+                            response = await fetch('http://localhost:4567/api/ai/chat', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({ prompt: prompt })
+                            });
+                            break;
+                    }
+                    
+                    if (!response.ok) {
+                        throw new Error(`Erro HTTP: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    displayResponse(data);
+                } catch (error) {
+                    console.error('Erro ao chamar API:', error);
+                    errorDiv.textContent = `Erro: ${error.message}. Verifique se a API está rodando em http://localhost:4567`;
+                } finally {
+                    loadingDiv.style.display = 'none';
+                }
+            });
+            
+            function displayResponse(data) {
+                // Formatar a resposta como JSON formatado
+                const formattedResponse = JSON.stringify(data, null, 2);
+                responseDiv.innerHTML = `<pre>${formattedResponse}</pre>`;
+            }
+        });
+    </script>
+</body>
+</html> 

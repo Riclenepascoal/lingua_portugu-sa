@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Video Library</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Space+Mono&display=swap');
+        
+        :root {
+            --space-dark: #0a0e17;
+            --space-blue: #1a237e;
+            --space-light: #4fc3f7;
+            --space-accent: #ffab00;
+            --space-text: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Space Mono', monospace;
+            color: var(--space-text);
+            background-color: var(--space-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .space-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(ellipse at center, #1a237e 0%, #0a0e17 100%);
+            overflow: hidden;
+        }
+        
+        .sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #ffab00, #ff6d00);
+            border-radius: 50%;
+            box-shadow: 0 0 50px #ffab00, 0 0 100px #ff6d00;
+            z-index: 1;
+        }
+        
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            transform-origin: center;
+        }
+        
+        .mercury {
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(145deg, #9e9e9e, #616161);
+            top: 50%;
+            left: 50%;
+            margin-top: -5px;
+            margin-left: -5px;
+            animation: orbit 4s linear infinite;
+        }
+        
+        .venus {
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(145deg, #ffcc80, #e65100);
+            top: 50%;
+            left: 50%;
+            margin-top: -7.5px;
+            margin-left: -7.5px;
+            animation: orbit 8s linear infinite;
+        }
+        
+        .earth {
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(145deg, #4fc3f7, #01579b);
+            top: 50%;
+            left: 50%;
+            margin-top: -8px;
+            margin-left: -8px;
+            animation: orbit 12s linear infinite;
+        }
+        
+        .mars {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(145deg, #ef9a9a, #c62828);
+            top: 50%;
+            left: 50%;
+            margin-top: -6px;
+            margin-left: -6px;
+            animation: orbit 20s linear infinite;
+        }
+        
+        .jupiter {
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(145deg, #bcaaa4, #5d4037);
+            top: 50%;
+            left: 50%;
+            margin-top: -12.5px;
+            margin-left: -12.5px;
+            animation: orbit 30s linear infinite;
+        }
+        
+        .saturn {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(145deg, #dce775, #afb42b);
+            top: 50%;
+            left: 50%;
+            margin-top: -11px;
+            margin-left: -11px;
+            animation: orbit 45s linear infinite;
+        }
+        
+        .saturn::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(20deg);
+        }
+        
+        .uranus {
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(145deg, #80deea, #00838f);
+            top: 50%;
+            left: 50%;
+            margin-top: -9px;
+            margin-left: -9px;
+            animation: orbit 60s linear infinite;
+        }
+        
+        .neptune {
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(145deg, #5c6bc0, #283593);
+            top: 50%;
+            left: 50%;
+            margin-top: -9px;
+            margin-left: -9px;
+            animation: orbit 80s linear infinite;
+        }
+        
+        @keyframes orbit {
+            0% {
+                transform: rotate(0deg) translateX(150px) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translateX(150px) rotate(-360deg);
+            }
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            background-color: rgba(10, 14, 23, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(79, 195, 247, 0.2);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--space-light);
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+            font-size: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--space-light);
+            font-size: 0.9rem;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid rgba(79, 195, 247, 0.3);
+            border-radius: 5px;
+            background-color: rgba(10, 14, 23, 0.8);
+            color: var(--space-text);
+            font-family: 'Space Mono', monospace;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--space-light);
+            box-shadow: 0 0 10px rgba(79, 195, 247, 0.3);
+        }
+        
+        .error {
+            color: #ff5252;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(145deg, var(--space-accent), #ff6d00);
+            color: var(--space-dark);
+            border: none;
+            border-radius: 5px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 171, 0, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            @keyframes orbit {
+                0% {
+                    transform: rotate(0deg) translateX(100px) rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg) translateX(100px) rotate(-360deg);
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="space-bg">
+        <div class="stars"></div>
+        <div class="sun"></div>
+        <div class="planet mercury"></div>
+        <div class="planet venus"></div>
+        <div class="planet earth"></div>
+        <div class="planet mars"></div>
+        <div class="planet jupiter"></div>
+        <div class="planet saturn"></div>
+        <div class="planet uranus"></div>
+        <div class="planet neptune"></div>
+    </div>
+    
+</head>
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
+    <div class="form-container p-8 max-w-md w-full fade-in">
+        <!-- Login Form -->
+        <form id="loginForm" class="space-y-6">
+            <div class="text-center">
+                <i class="fas fa-film text-white text-5xl mb-4"></i>
+                <h1 class="text-3xl font-bold text-white">Social Library</h1>
+                <p class="text-gray-200 mt-2">Entre na sua conta para acessar a biblioteca</p>
+            </div>
+            
+            <div>
+                <label for="loginEmail" class="block text-sm font-medium text-white mb-1">E-mail</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-gray-400"></i>
+                    </div>
+                    <input type="email" id="loginEmail" required
+                        class="input-field w-full pl-10 pr-3 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        placeholder="seu@email.com">
+                </div>
+            </div>
+            
+            <div>
+                <label for="loginPassword" class="block text-sm font-medium text-white mb-1">Senha</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="password" id="loginPassword" required minlength="6"
+                        class="input-field w-full pl-10 pr-3 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        placeholder="•••••••">
+                </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input id="rememberMe" type="checkbox" class="h-4 w-4 text-purple-500 focus:ring-purple-500 border-gray-300 rounded">
+                    <label for="rememberMe" class="ml-2 block text-sm text-white">
+                        Lembrar-me
+                    </label>
+                </div>
+                <div>
+                    <a href="#" class="text-sm text-purple-300 hover:text-purple-200">Esqueceu a senha?</a>
+                </div>
+            </div>
+            
+            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-150 ease-in-out">
+                Entrar
+            </button>
+            
+            <div class="text-center text-sm text-gray-300">
+                Não tem uma conta? 
+                <span class="toggle-form text-purple-300 font-medium cursor-pointer" onclick="toggleForms()">Crie uma aqui</span>
+            </div>
+        </form>
+        
+        <!-- Signup Form (hidden by default) -->
+        <form id="signupForm" class="space-y-6 hidden">
+            <div class="text-center">
+                <i class="fas fa-user-plus text-white text-5xl mb-4"></i>
+                <h1 class="text-3xl font-bold text-white">Criar Conta</h1>
+                <p class="text-gray-200 mt-2">Preencha seus dados para criar uma conta</p>
+            </div>
+            
+            <div>
+                <label for="signupName" class="block text-sm font-medium text-white mb-1">Nome Completo</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <input type="text" id="signupName" required
+                        class="input-field w-full pl-10 pr-3 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        placeholder="Seu nome">
+                </div>
+            </div>
+            
+            <div>
+                <label for="signupEmail" class="block text-sm font-medium text-white mb-1">E-mail</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-gray-400"></i>
+                    </div>
+                    <input type="email" id="signupEmail" required
+                        class="input-field w-full pl-10 pr-3 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        placeholder="seu@email.com">
+                </div>
+            </div>
+            
+            <div>
+                <label for="signupPassword" class="block text-sm font-medium text-white mb-1">Senha</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="password" id="signupPassword" required minlength="6"
+                        class="input-field w-full pl-10 pr-3 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        placeholder="•••••••">
+                </div>
+                <p class="mt-1 text-xs text-gray-300">Mínimo 6 caracteres</p>
+            </div>
+            
+            <div>
+                <label for="signupConfirmPassword" class="block text-sm font-medium text-white mb-1">Confirmar Senha</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="password" id="signupConfirmPassword" required minlength="6"
+                        class="input-field w-full pl-10 pr-3 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        placeholder="•••••••">
+                </div>
+            </div>
+            
+            <div class="flex items-center">
+                <input id="terms" type="checkbox" required class="h-4 w-4 text-purple-500 focus:ring-purple-500 border-gray-300 rounded">
+                <label for="terms" class="ml-2 block text-sm text-white">
+                    Eu concordo com os <a href="#" class="text-purple-300">Termos de Serviço</a> e <a href="#" class="text-purple-300">Política de Privacidade</a>
+                </label>
+            </div>
+            
+            <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition duration-150 ease-in-out">
+                Criar Conta
+            </button>
+            
+            <div class="text-center text-sm text-gray-300">
+                Já tem uma conta? 
+                <span class="toggle-form text-purple-300 font-medium cursor-pointer" onclick="toggleForms()">Faça login aqui</span>
+            </div>
+        </form>
+        
+        <!-- Loading Spinner (hidden by default) -->
+        <div id="loadingSpinner" class="hidden text-center py-8">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500 mb-4"></div>
+            <p class="text-white">Autenticando...</p>
+        </div>
+        
+        <!-- Success Message (hidden by default) -->
+        <div id="successMessage" class="hidden text-center py-8">
+            <i class="fas fa-check-circle text-green-400 text-5xl mb-4"></i>
+            <h2 class="text-2xl font-bold text-white mb-2">Autenticação bem-sucedida!</h2>
+            <p class="text-gray-200">Você será redirecionado em breve...</p>
+        </div>
+    </div>
+    
+    <script>
+        // Toggle between login and signup forms
+        function toggleForms() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            
+            if (loginForm.classList.contains('hidden')) {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                loginForm.classList.add('fade-in');
+                setTimeout(() => loginForm.classList.remove('fade-in'), 500);
+            } else {
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                signupForm.classList.add('fade-in');
+                setTimeout(() => signupForm.classList.remove('fade-in'), 500);
+            }
+        }
+        
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('loadingSpinner').classList.remove('hidden');
+            
+            // Simulate authentication delay
+            setTimeout(() => {
+                document.getElementById('loadingSpinner').classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+                
+                // Redirect to local file after successful login
+                setTimeout(() => {
+                    window.location.href = 'file:///C:/Users/riclene/Downloads/whatvideo/nova_Libraey/Libraey/index.html';
+                }, 2000);
+            }, 1500);
+        });
+        
+        // Handle signup form submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+            
+            // Show loading spinner
+            document.getElementById('signupForm').classList.add('hidden');
+            document.getElementById('loadingSpinner').classList.remove('hidden');
+            
+            // Simulate signup process delay
+            setTimeout(() => {
+                document.getElementById('loadingSpinner').classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+                
+                // Redirect to local file after successful signup (simulating auto-login)
+                setTimeout(() => {
+                    window.location.href = 'file:///C:/Users/riclene/Downloads/whatvideo/nova_Libraey/Libraey/index.html';
+                }, 2000);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

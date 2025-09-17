@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Library - Plataforma Inovadora de Acessibilidade</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="hero">
+        <div class="container">
+            <h1>Social Library</h1>
+            <p>Uma experiência inovadora de biblioteca para todos, com foco especial em acessibilidade e bem-estar</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="showSection('assistente-voz')">
+                    Experimentar Assistente de Voz
+                </button>
+                <button class="btn btn-secondary" onclick="showSection('bem-estar')">
+                    Chat de Bem-estar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">Social Library</div>
+            <div class="nav-links">
+                <a href="#" onclick="showSection('home')">Início</a>
+                <a href="#" onclick="showSection('assistente-voz')">Assistente de Voz</a>
+                <a href="#" onclick="showSection('bem-estar')">Bem-estar</a>
+                <a href="#" onclick="showSection('zona-infantil')">Zona Infantil</a>
+                <a href="#" onclick="showSection('idiomas')">Idiomas</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="container">
+                <h2>Nossas Funcionalidades Inovadoras</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon purple">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <h3>Assistente de Voz</h3>
+                        <p>Assistente com IA para amantes da literatura com deficiência visual</p>
+                        <button class="btn btn-outline" onclick="showSection('assistente-voz')">Explorar</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon blue">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Chat de Bem-estar</h3>
+                        <p>Apoio emocional e recomendações personalizadas de livros</p>
+                        <button class="btn btn-outline" onclick="showSection('bem-estar')">Conversar Agora</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon green">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Exploradores de Palavras</h3>
+                        <p>Zona de aprendizado interativa para crianças</p>
+                        <button class="btn btn-outline" onclick="showSection('zona-infantil')">Descobrir</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon amber">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3>Progresso de Leitura</h3>
+                        <p>Acompanhe e monitore hábitos de leitura e bem-estar</p>
+                        <button class="btn btn-outline" onclick="showSection('progresso')">Ver Progresso</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon red">
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                        <h3>Recomendações de Livros</h3>
+                        <p>Sugestões personalizadas baseadas em necessidades emocionais</p>
+                        <button class="btn btn-outline" onclick="showSection('recomendacoes')">Obter Recomendações</button>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon indigo">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h3>Aprendizado de Idiomas</h3>
+                        <p>Expanda seus horizontes linguísticos</p>
+                        <button class="btn btn-outline" onclick="showSection('idiomas')">Aprender Idiomas</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Assistente de Voz Section -->
+        <section id="assistente-voz" class="section">
+            <div class="container">
+                <div class="back-button">
+                    <button class="btn btn-link" onclick="showSection('home')">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Início
+                    </button>
+                </div>
+
+                <div class="voice-assistant">
+                    <div class="card">
+                        <div class="card-header purple">
+                            <h2>Assistente de Voz</h2>
+                            <p>Seu companheiro de leitura com IA para deficientes visuais</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="voice-controls">
+                                <button id="voiceButton" class="voice-btn" onclick="toggleVoiceRecognition()">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                                <p id="voiceStatus">Toque para começar a ouvir</p>
+                                <div id="transcript" class="transcript hidden"></div>
+                            </div>
+
+                            <div class="voice-commands">
+                                <h3>Comandos de Voz:</h3>
+                                <ul>
+                                    <li>"Ler [título do livro]" para iniciar a leitura</li>
+                                    <li>"Parar" ou "Pausar" para interromper a leitura</li>
+                                    <li>"Listar livros" para ouvir os títulos disponíveis</li>
+                                    <li>"Sugerir livro" para receber uma recomendação</li>
+                                    <li>"Sugerir livro sobre [tema]" para recomendação específica</li>
+                                    <li>"Ajuda" para assistência</li>
+                                </ul>
+                            </div>
+
+                            <div class="voice-actions">
+                                <button class="btn btn-outline" onclick="stopReading()">Parar Leitura</button>
+                                <button class="btn btn-primary" onclick="readCurrentBook()" id="readButton" disabled>
+                                    <i class="fas fa-book-open"></i> Selecione um livro
+                                </button>
+                                <button class="btn btn-secondary" onclick="getBookSuggestion()">
+                                    <i class="fas fa-lightbulb"></i> Obter Sugestão
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="currentBookCard" class="card hidden">
+                        <div class="card-header">
+                            <h3 id="currentBookTitle"></h3>
+                            <p id="currentBookStatus">Pronto para ler</p>
+                        </div>
+                        <div class="card-content">
+                            <p id="currentBookContent"></p>
+                        </div>
+                    </div>
+                    
+                    <div id="booksLibrary" class="books-library">
+                        <h3>Biblioteca de Livros</h3>
+                        <div class="library-tabs">
+                            <button class="library-tab active" onclick="showLibraryTab('classics')">Clássicos</button>
+                            <button class="library-tab" onclick="showLibraryTab('contemporaneos')">Contemporâneos</button>
+                            <button class="library-tab" onclick="showLibraryTab('temas')">Temas</button>
+                            <button class="library-tab" onclick="showLibraryTab('sugestoes')">Sugestões da IA</button>
+                        </div>
+                        
+                        <div id="classics" class="library-content active">
+                            <div class="books-grid">
+                                <div class="library-book" onclick="loadBookContent('dom-casmurro')">
+                                    <div class="book-cover">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h4>Dom Casmurro</h4>
+                                    <p>Machado de Assis</p>
+                                </div>
+                                <div class="library-book" onclick="loadBookContent('o-cortico')">
+                                    <div class="book-cover">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h4>O Cortiço</h4>
+                                    <p>Aluísio Azevedo</p>
+                                </div>
+                                <div class="library-book" onclick="loadBookContent('memorias-postumas')">
+                                    <div class="book-cover">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h4>Memórias Póstumas de Brás Cubas</h4>
+                                    <p>Machado de Assis</p>
+                                </div>
+                                <div class="library-book" onclick="loadBookContent('o-alienista')">
+                                    <div class="book-cover">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h4>O Alienista</h4>
+                                    <p>Machado de Assis</p>
+                                </div>
+                            </div>
+                            <div class="pagination">
+                                <button class="pagination-btn" disabled>
+                                    <i class="fas fa-chevron-left"></i> Anterior
+                                </button>
+                                <span>Página 1 de 2</span>
+                                <button class="pagination-btn" onclick="changePage('classics', 2)">
+                                    Próxima <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="contemporaneos" class="library-content">
+                            <div class="books-grid">
+                                <div class="library-book" onclick="loadBookContent('a-hora-da-estrela')">
+                                    <div class="book-cover">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h4>A Hora da Estrela</h4>
+                                    <p>Clarice Lispector</p>
+                                </div>
+                                <div class="library-book" onclick="loadBookContent('capitaes-de-areia')">
+                                    <div class="book-cover">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h4>Capitães da Areia</h4>
+                                    <p>Jorge Amado</p>
+                                </div>
+                                <div class="library-book" onclick="loadBookContent('sagarana')">
+                                    <div class="book-cover">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h4>Sagarana</h4>
+                                    <p>Guimarães Rosa</p>
+                                </div>
+                                <div class="library-book" onclick="loadBookContent('vidas-secas')">
+                                    <div class="book-cover">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h4>Vidas Secas</h4>
+                                    <p>Graciliano Ramos</p>
+                                </div>
+                            </div>
+                            <div class="pagination">
+                                <button class="pagination-btn" disabled>
+                                    <i class="fas fa-chevron-left"></i> Anterior
+                                </button>
+                                <span>Página 1 de 2</span>
+                                <button class="pagination-btn" onclick="changePage('contemporaneos', 2)">
+                                    Próxima <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="temas" class="library-content">
+                            <div class="themes-container">
+                                <div class="theme-section">
+                                    <h4 class="theme-title">Romance</h4>
+                                    <div class="theme-books">
+                                        <div class="theme-book" onclick="loadBookContent('grande-sertao')">
+                                            <div class="book-thumbnail">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <div class="book-info">
+                                                <h5>Grande Sertão: Veredas</h5>
+                                                <p>Guimarães Rosa</p>
+                                            </div>
+                                        </div>
+                                        <div class="theme-book" onclick="loadBookContent('iracema')">
+                                            <div class="book-thumbnail">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <div class="book-info">
+                                                <h5>Iracema</h5>
+                                                <p>José de Alencar</p>
+                                            </div>
+                                        </div>
+                                        <button class="theme-more" onclick="expandTheme('romance')">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="theme-section">
+                                    <h4 class="theme-title">Realismo Social</h4>
+                                    <div class="theme-books">
+                                        <div class="theme-book" onclick="loadBookContent('o-cortico')">
+                                            <div class="book-thumbnail">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <div class="book-info">
+                                                <h5>O Cortiço</h5>
+                                                <p>Aluísio Azevedo</p>
+                                            </div>
+                                        </div>
+                                        <div class="theme-book" onclick="loadBookContent('vidas-secas')">
+                                            <div class="book-thumbnail">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <div class="book-info">
+                                                <h5>Vidas Secas</h5>
+                                                <p>Graciliano Ramos</p>
+                                            </div>
+                                        </div>
+                                        <button class="theme-more" onclick="expandTheme('realismo')">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="theme-section">
+                                    <h4 class="theme-title">Literatura Psicológica</h4>
+                                    <div class="theme-books">
+                                        <div class="theme-book" onclick="loadBookContent('dom-casmurro')">
+                                            <div class="book-thumbnail">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <div class="book-info">
+                                                <h5>Dom Casmurro</h5>
+                                                <p>Machado de Assis</p>
+                                            </div>
+                                        </div>
+                                        <div class="theme-book" onclick="loadBookContent('a-hora-da-estrela')">
+                                            <div class="book-thumbnail">
+                                                <i class="fas fa-book"></i>
+                                            </div>
+                                            <div class="book-info">
+                                                <h5>A Hora da Estrela</h5>
+                                                <p>Clarice Lispector</p>
+                                            </div>
+                                        </div>
+                                        <button class="theme-more" onclick="expandTheme('psicologica')">
+                                            <i class="fas fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="sugestoes" class="library-content">
+                            <div id="ai-suggestions" class="ai-suggestions">
+                                <p class="info-text">Peça sugestões de livros usando o botão "Obter Sugestão" ou diga "Sugerir livro" para o assistente de voz.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tema expandido -->
+                    <div id="expanded-theme" class="expanded-theme">
+                        <div class="expanded-header">
+                            <button class="close-expanded" onclick="closeExpandedTheme()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <h3 id="expanded-theme-title">Tema</h3>
+                        </div>
+                        <div class="expanded-subtitles">
+                            <button class="subtitle-btn active" data-subtitle="all">Todos</button>
+                            <button class="subtitle-btn" data-subtitle="classicos">Clássicos</button>
+                            <button class="subtitle-btn" data-subtitle="contemporaneos">Contemporâneos</button>
+                            <button class="subtitle-btn" data-subtitle="internacionais">Internacionais</button>
+                        </div>
+                        <div id="expanded-books" class="expanded-books">
+                            <!-- Será preenchido dinamicamente -->
+                        </div>
+                    </div>
+                    
+                    <!-- Reader Mode -->
+                    <div id="reader-mode" class="reader-mode">
+                        <div class="reader-header">
+                            <button class="reader-close" onclick="closeReaderMode()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <h3 id="reader-book-title">Título do Livro</h3>
+                            <p id="reader-book-author">Autor</p>
+                        </div>
+                        <div class="reader-toolbar">
+                            <button class="reader-btn" onclick="adjustFontSize(-1)">
+                                <i class="fas fa-font"></i><i class="fas fa-minus"></i>
+                            </button>
+                            <button class="reader-btn" onclick="adjustFontSize(1)">
+                                <i class="fas fa-font"></i><i class="fas fa-plus"></i>
+                            </button>
+                            <button class="reader-btn" onclick="toggleDarkMode()">
+                                <i class="fas fa-moon"></i>
+                            </button>
+                            <button class="reader-btn" onclick="readAloud()">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                            <button class="reader-btn" onclick="bookmarkCurrentPosition()">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                        <div id="reader-content" class="reader-content">
+                            <!-- Conteúdo do livro -->
+                        </div>
+                        <div class="reader-navigation">
+                            <button class="nav-btn" onclick="previousChapter()">
+                                <i class="fas fa-chevron-left"></i> Capítulo anterior
+                            </button>
+                            <div class="chapter-info">
+                                <span id="current-chapter">Capítulo 1</span>
+                                <input type="range" id="chapter-progress" min="1" max="100" value="1" onchange="jumpToChapter(this.value)">
+                            </div>
+                            <button class="nav-btn" onclick="nextChapter()">
+                                Próximo capítulo <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chat de Bem-estar Section -->
+        <section id="bem-estar" class="section">
+            <div class="container">
+                <div class="back-button">
+                    <button class="btn btn-link" onclick="showSection('home')">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Início
+                    </button>
+                </div>
+
+                <div class="wellbeing-chat">
+                    <div class="card">
+                        <div class="card-header blue">
+                            <h2>Chat de Bem-estar</h2>
+                            <p>Um espaço seguro para expressar seus sentimentos e receber recomendações personalizadas de livros</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="tabs">
+                                <div class="tab-buttons">
+                                    <button class="tab-btn active" onclick="showTab('chat-tab')">
+                                        <i class="fas fa-comments"></i> Chat
+                                    </button>
+                                    <button class="tab-btn" onclick="showTab('recommendations-tab')">
+                                        <i class="fas fa-book-open"></i> Recomendações
+                                    </button>
+                                </div>
+
+                                <div id="chat-tab" class="tab-content active">
+                                    <div id="emojiSelector" class="emoji-selector">
+                                        <h3>Como você está se sentindo hoje?</h3>
+                                        <div class="emoji-grid">
+                                            <button class="emoji-btn" onclick="selectEmoji('😊', 'Feliz', 'positive')">
+                                                <span class="emoji">😊</span>
+                                                <span class="label">Feliz</span>
+                                            </button>
+                                            <button class="emoji-btn" onclick="selectEmoji('😔', 'Triste', 'depression')">
+                                                <span class="emoji">😔</span>
+                                                <span class="label">Triste</span>
+                                            </button>
+                                            <button class="emoji-btn" onclick="selectEmoji('😰', 'Ansioso', 'anxiety')">
+                                                <span class="emoji">😰</span>
+                                                <span class="label">Ansioso</span>
+                                            </button>
+                                            <button class="emoji-btn" onclick="selectEmoji('😡', 'Estressado', 'stress')">
+                                                <span class="emoji">😡</span>
+                                                <span class="label">Estressado</span>
+                                            </button>
+                                            <button class="emoji-btn" onclick="selectEmoji('😴', 'Cansado', 'fatigue')">
+                                                <span class="emoji">😴</span>
+                                                <span class="label">Cansado</span>
+                                            </button>
+                                            <button class="emoji-btn" onclick="selectEmoji('😕', 'Confuso', 'confusion')">
+                                                <span class="emoji">😕</span>
+                                                <span class="label">Confuso</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div id="chatMessages" class="chat-messages"></div>
+
+                                    <div class="chat-input">
+                                        <div class="input-container">
+                                            <textarea id="chatInput" placeholder="Digite sua mensagem..." rows="1" data-min-rows="1"></textarea>
+                                            <div class="chat-actions">
+                                                <button class="emoji-toggle" onclick="toggleEmojiPicker()">
+                                                    <i class="fas fa-smile"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <button class="send-btn" id="sendButton" onclick="sendMessage()">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div id="recommendations-tab" class="tab-content">
+                                    <h3>Recomendações de Livros</h3>
+                                    <p class="info-text">Selecione uma emoção ou converse com o chatbot para receber recomendações personalizadas de livros.</p>
+                                    <div id="recommendations-content" class="recommendations-content">
+                                        <p>Nenhuma recomendação disponível no momento.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zona Infantil Section -->
+        <section id="zona-infantil" class="section">
+            <div class="container">
+                <div class="back-button">
+                    <button class="btn btn-link" onclick="showSection('home')">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Início
+                    </button>
+                </div>
+
+                <div class="kids-zone">
+                    <h2>Zona Infantil - Exploradores de Palavras</h2>
+                    <p class="section-description">Um espaço dedicado ao aprendizado e diversão para crianças de todas as idades</p>
+
+                    <div class="books-grid">
+                        <div class="book-card" onclick="openBook(1)">
+                            <div class="book-cover level-beginner">
+                                <span class="book-icon"><i class="fas fa-book"></i></span>
+                                <div class="book-level">Iniciante</div>
+                            </div>
+                            <h3>A Aventura do Alfabeto</h3>
+                            <p>Uma jornada divertida pelo mundo das letras</p>
+                            <button class="btn-small">Ler Agora</button>
+                        </div>
+
+                        <div class="book-card" onclick="openBook(2)">
+                            <div class="book-cover level-intermediate">
+                                <span class="book-icon"><i class="fas fa-calculator"></i></span>
+                                <div class="book-level">Intermediário</div>
+                            </div>
+                            <h3>Os Ninjas dos Números</h3>
+                            <p>Aprenda matemática com diversão e aventura</p>
+                            <button class="btn-small">Ler Agora</button>
+                        </div>
+
+                        <div class="book-card" onclick="openBook(3)">
+                            <div class="book-cover level-advanced">
+                                <span class="book-icon"><i class="fas fa-flask"></i></span>
+                                <div class="book-level">Avançado</div>
+                            </div>
+                            <h3>Exploradores da Ciência</h3>
+                            <p>Descubra os mistérios do mundo científico</p>
+                            <button class="btn-small">Ler Agora</button>
+                        </div>
+                    </div>
+
+                    <div class="floating-emoji" style="top: 50px; left: 10%;">🚀</div>
+                    <div class="floating-emoji" style="top: 150px; right: 15%;">🔍</div>
+                    <div class="floating-emoji" style="bottom: 100px; left: 20%;">🌈</div>
+                </div>
+
+                <!-- Book Reader -->
+                <div id="book-reader" class="book-reader">
+                    <div class="reader-header">
+                        <button class="btn-link" onclick="closeBook()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <h2 id="reader-title" data-book-id=""></h2>
+                        <p id="reader-level"></p>
+                    </div>
+
+                    <div class="reader-content">
+                        <div class="reader-tabs">
+                            <button class="reader-tab-btn active" onclick="showReaderTab('reader-content-tab')">
+                                <i class="fas fa-book-open"></i> Leitura
+                            </button>
+                            <button class="reader-tab-btn" id="reader-quiz-btn" onclick="showReaderTab('reader-quiz-tab')">
+                                <i class="fas fa-question-circle"></i> Quiz
+                            </button>
+                        </div>
+
+                        <div id="reader-content-tab" class="reader-tab active">
+                            <div class="reader-story">
+                                <div id="reader-content" class="animated-paragraph"></div>
+                            </div>
+                            <div class="reader-actions">
+                                <button class="btn btn-primary" id="startQuizBtn" onclick="startQuiz()">Iniciar Quiz</button>
+                            </div>
+                        </div>
+
+                        <div id="reader-quiz-tab" class="reader-tab">
+                            <div id="reader-quiz-content" class="reader-quiz">
+                                <!-- Quiz content will be dynamically generated -->
+                            </div>
+                            <div class="reader-actions">
+                                <button class="btn btn-primary" onclick="submitQuiz()">Enviar Respostas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Idiomas Section -->
+        <section id="idiomas" class="section">
+            <div class="container">
+                <div class="back-button">
+                    <button class="btn btn-link" onclick="showSection('home')">
+                        <i class="fas fa-arrow-left"></i> Voltar ao Início
+                    </button>
+                </div>
+
+                <div class="languages">
+                    <h2>Aprendizado de Idiomas</h2>
+                    <p class="section-description">Expanda seus horizontes linguísticos com nossos recursos interativos</p>
+
+                    <div class="languages-grid">
+                        <div class="language-card" onclick="openLanguage(1)">
+                            <div class="language-flag">
+                                <span class="flag-icon">🇺🇸</span>
+                            </div>
+                            <h3>Inglês</h3>
+                            <p>Iniciante a Avançado</p>
+                            <button class="btn btn-small">Aprender</button>
+                        </div>
+
+                        <div class="language-card" onclick="openLanguage(2)">
+                            <div class="language-flag">
+                                <span class="flag-icon">🇪🇸</span>
+                            </div>
+                            <h3>Espanhol</h3>
+                            <p>Iniciante a Intermediário</p>
+                            <button class="btn btn-small">Aprender</button>
+                        </div>
+
+                        <div class="language-card" onclick="openLanguage(3)">
+                            <div class="language-flag">
+                                <span class="flag-icon">🇫🇷</span>
+                            </div>
+                            <h3>Francês</h3>
+                            <p>Iniciante a Avançado</p>
+                            <button class="btn btn-small">Aprender</button>
+                        </div>
+
+                        <div class="language-card" onclick="openLanguage(4)">
+                            <div class="language-flag">
+                                <span class="flag-icon">🇩🇪</span>
+                            </div>
+                            <h3>Alemão</h3>
+                            <p>Iniciante</p>
+                            <button class="btn btn-small">Aprender</button>
+                        </div>
+
+                        <div class="language-card" onclick="openLanguage(5)">
+                            <div class="language-flag">
+                                <span class="flag-icon">🇮🇹</span>
+                            </div>
+                            <h3>Italiano</h3>
+                            <p>Iniciante a Intermediário</p>
+                            <button class="btn btn-small">Aprender</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Screen -->
+                <div id="language-screen" class="language-screen">
+                    <div class="language-header">
+                        <button class="btn btn-link" onclick="document.getElementById('language-screen').classList.remove('active')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <h2 id="language-title"></h2>
+                        <p id="language-description"></p>
+                        <p id="language-level"></p>
+                    </div>
+                    <div class="language-content">
+                        <div id="language-loading" class="loading-spinner">
+                            <i class="fas fa-circle-notch fa-spin"></i>
+                            <p>Carregando conteúdo do idioma...</p>
+                        </div>
+                        
+                        <div id="language-error" class="error-state" style="display:none">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>Não foi possível carregar o conteúdo. Tente novamente.</p>
+                            <button class="btn btn-primary" onclick="retryLanguageLoad()">Tentar Novamente</button>
+                        </div>
+                        
+                        <div id="language-content-container" style="display:none">
+                            <!-- Tabs para navegação entre seções do idioma -->
+                            <div class="language-tabs">
+                                <button class="language-tab-btn active" onclick="showLanguageTab('vocabulary-tab')">
+                                    <i class="fas fa-book"></i> Vocabulário
+                                </button>
+                                <button class="language-tab-btn" onclick="showLanguageTab('phrases-tab')">
+                                    <i class="fas fa-comments"></i> Frases Úteis
+                                </button>
+                                <button class="language-tab-btn" onclick="showLanguageTab('practice-tab')">
+                                    <i class="fas fa-tasks"></i> Prática
+                                </button>
+                            </div>
+                            
+                            <!-- Conteúdo das abas -->
+                            <div id="vocabulary-tab" class="language-tab-content active">
+                                <h3>Vocabulário Básico</h3>
+                                <div id="vocabulary-content" class="vocabulary-grid">
+                                    <!-- O conteúdo será preenchido dinamicamente pela API -->
+                                </div>
+                            </div>
+                            
+                            <div id="phrases-tab" class="language-tab-content">
+                                <h3>Frases Úteis</h3>
+                                <div id="phrases-content" class="phrases-list">
+                                    <!-- O conteúdo será preenchido dinamicamente pela API -->
+                                </div>
+                            </div>
+                            
+                            <div id="practice-tab" class="language-tab-content">
+                                <h3>Pratique o que Aprendeu</h3>
+                                <div id="practice-content" class="practice-exercises">
+                                    <!-- O conteúdo será preenchido dinamicamente pela API -->
+                                </div>
+                                <div class="practice-actions">
+                                    <button class="btn btn-primary" onclick="checkPracticeAnswers()">Verificar Respostas</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Social Library. Todos os direitos reservados.</p>
+            <p>Desenvolvido com IA e Gemini API para melhorar acessibilidade e experiência de leitura.</p>
+        </div>
+    </footer>
+</body>
+</html>

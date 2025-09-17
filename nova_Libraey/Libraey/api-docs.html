@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação da API Libraey</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #4a148c;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            border-bottom: 2px solid #4a148c;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            color: #4a148c;
+        }
+        h3 {
+            color: #673ab7;
+            margin-top: 25px;
+        }
+        .endpoint {
+            background-color: #f5f5f5;
+            border-left: 4px solid #673ab7;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .method {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            margin-right: 10px;
+            min-width: 60px;
+            text-align: center;
+        }
+        .get { background-color: #4CAF50; }
+        .post { background-color: #2196F3; }
+        .put { background-color: #FF9800; }
+        .delete { background-color: #F44336; }
+        .url {
+            font-family: monospace;
+            background-color: #eee;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .description {
+            margin: 10px 0;
+        }
+        code {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 15px;
+            display: block;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: monospace;
+        }
+        .parameters {
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .response {
+            margin-top: 15px;
+        }
+        .nav {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .nav a {
+            margin-right: 15px;
+            color: #673ab7;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Documentação da API Libraey</h1>
+        <p>API RESTful para a plataforma Social Library</p>
+    </header>
+
+    <div class="nav">
+        <a href="#livros">Livros</a>
+        <a href="#livros-infantis">Livros Infantis</a>
+        <a href="#recomendacoes">Recomendações</a>
+        <a href="#idiomas">Idiomas</a>
+        <a href="#ia">Inteligência Artificial</a>
+    </div>
+
+    <section class="section">
+        <h2>Introdução</h2>
+        <p>Bem-vindo à documentação da API Libraey. Esta API foi desenvolvida para fornecer recursos de gerenciamento de biblioteca, recomendações de livros baseadas em estados emocionais e integrações com IA para a plataforma Social Library.</p>
+        <p>O servidor da API é inicializado na porta 4567 por padrão.</p>
+    </section>
+
+    <section id="livros" class="section">
+        <h2>Livros</h2>
+        <p>Endpoints para gerenciar o catálogo de livros.</p>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/books</span>
+            <p class="description">Retorna todos os livros disponíveis no catálogo.</p>
+            <div class="response">
+                <h4>Exemplo de Resposta:</h4>
+                <code>
+[
+  {
+    "id": "dom-casmurro",
+    "title": "dom casmurro",
+    "content": "Uma noite destas, vindo da cidade para o Engenho Novo, encontrei no trem da Central um rapaz aqui do bairro, que eu conheço de vista e de chapéu..."
+  },
+  {
+    "id": "o-cortico",
+    "title": "o cortiço",
+    "content": "João Romão foi, dos treze aos vinte e cinco anos, empregado de um vendeiro que enriqueceu entre as quatro paredes de uma suja e obscura taverna nos refolhos do bairro do Botafogo..."
+  }
+]
+                </code>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/books/:id</span>
+            <p class="description">Retorna um livro específico pelo ID.</p>
+            <div class="parameters">
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>String</td>
+                        <td>ID único do livro</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="response">
+                <h4>Exemplo de Resposta:</h4>
+                <code>
+{
+  "id": "dom-casmurro",
+  "title": "dom casmurro",
+  "content": "Uma noite destas, vindo da cidade para o Engenho Novo, encontrei no trem da Central um rapaz aqui do bairro, que eu conheço de vista e de chapéu..."
+}
+                </code>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="url">/api/books</span>
+            <p class="description">Adiciona um novo livro ao catálogo.</p>
+            <div class="parameters">
+                <h4>Corpo da Requisição:</h4>
+                <code>
+{
+  "title": "Grande Sertão: Veredas",
+  "content": "Nonada. Tiros que o senhor ouviu foram de briga de homem não, Deus esteja..."
+}
+                </code>
+            </div>
+            <div class="response">
+                <h4>Exemplo de Resposta:</h4>
+                <code>
+{
+  "message": "Book added successfully"
+}
+                </code>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method put">PUT</span>
+            <span class="url">/api/books/:id</span>
+            <p class="description">Atualiza um livro existente.</p>
+            <div class="parameters">
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>String</td>
+                        <td>ID único do livro</td>
+                    </tr>
+                </table>
+                <h4>Corpo da Requisição:</h4>
+                <code>
+{
+  "title": "Dom Casmurro - Edição Atualizada",
+  "content": "Uma noite destas, vindo da cidade para o Engenho Novo..."
+}
+                </code>
+            </div>
+            <div class="response">
+                <h4>Exemplo de Resposta:</h4>
+                <code>
+{
+  "message": "Book updated successfully"
+}
+                </code>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method delete">DELETE</span>
+            <span class="url">/api/books/:id</span>
+            <p class="description">Remove um livro do catálogo.</p>
+            <div class="parameters">
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>String</td>
+                        <td>ID único do livro</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="response">
+                <h4>Exemplo de Resposta:</h4>
+                <code>
+{
+  "message": "Book deleted successfully"
+}
+                </code>
+            </div>
+        </div>
+    </section>
+
+    <section id="livros-infantis" class="section">
+        <h2>Livros Infantis</h2>
+        <p>Endpoints para gerenciar livros infantis.</p>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/kidsbooks</span>
+            <p class="description">Retorna todos os livros infantis disponíveis.</p>
+            <div class="response">
+                <h4>Exemplo de Resposta:</h4>
+                <code>
+[
+  {
+    "id": "alfabeto-aventura",
+    "title": "A Aventura do Alfabeto",
+    "content": "Ana estava animada para começar sua aventura com as letras...",
+    "ageRange": "4-6",
+    "quizQuestions": [
+      {
+        "question": "Qual foi a primeira letra que Ana encontrou?",
+        "options": ["A", "B", "C", "D"],
+        "correctAnswer": 0
+      }
+    ]
+  }
+]
+                </code>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/kidsbooks/:id</span>
+            <p class="description">Retorna um livro infantil específico pelo ID.</p>
+            <div class="parameters">
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>String</td>
+                        <td>ID único do livro infantil</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="url">/api/kidsbooks</span>
+            <p class="description">Adiciona um novo livro infantil.</p>
+            <div class="parameters">
+                <h4>Corpo da Requisição:</h4>
+                <code>
+{
+  "title": "Os Ninjas dos Números",
+  "content": "No mundo secreto da Matemática, existem ninjas especiais...",
+  "ageRange": "7-9",
+  "quizQuestions": [
+    {
+      "question": "Qual é o resultado de 5 + 3?",
+      "options": ["7", "8", "9", "10"],
+      "correctAnswer": 1
+    }
+  ]
+}
+                </code>
+            </div>
+        </div>
+    </section>
+
+    <section id="recomendacoes" class="section">
+        <h2>Recomendações de Livros</h2>
+        <p>Endpoints para gerenciar recomendações de livros baseadas em estados emocionais.</p>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/recommendations</span>
+            <p class="description">Retorna todos os estados emocionais e suas recomendações.</p>
+            <div class="response">
+                <h4>Exemplo de Resposta:</h4>
+                <code>
+{
+  "anxiety": [
+    "O Poder do Agora - Eckhart Tolle",
+    "Respire - James Nestor",
+    "Ansiedade: Como enfrentar o mal do século - Augusto Cury"
+  ],
+  "depression": [
+    "O Demônio do Meio-Dia - Andrew Solomon",
+    "Perto do Coração Selvagem - Clarice Lispector",
+    "Razão e Sensibilidade - Jane Austen"
+  ]
+}
+                </code>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/recommendations/:state</span>
+            <p class="description">Retorna recomendações para um estado emocional específico.</p>
+            <div class="parameters">
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                    </tr>
+                    <tr>
+                        <td>state</td>
+                        <td>String</td>
+                        <td>Estado emocional (ex: anxiety, depression, positive)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="url">/api/recommendations/:state</span>
+            <p class="description">Adiciona uma recomendação a um estado emocional.</p>
+            <div class="parameters">
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                    </tr>
+                    <tr>
+                        <td>state</td>
+                        <td>String</td>
+                        <td>Estado emocional (ex: anxiety, depression, positive)</td>
+                    </tr>
+                </table>
+                <h4>Corpo da Requisição:</h4>
+                <code>
+{
+  "recommendation": "A Coragem de Ser Imperfeito - Brené Brown"
+}
+                </code>
+            </div>
+        </div>
+    </section>
+
+    <section id="idiomas" class="section">
+        <h2>Idiomas</h2>
+        <p>Endpoints para gerenciar idiomas disponíveis.</p>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/languages</span>
+            <p class="description">Retorna todos os idiomas disponíveis.</p>
+        </div>
+
+        <div class="endpoint">
+            <span class="method get">GET</span>
+            <span class="url">/api/languages/:id</span>
+            <p class="description">Retorna um idioma específico pelo ID.</p>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="url">/api/languages</span>
+            <p class="description">Adiciona um novo idioma.</p>
+            <div class="parameters">
+                <h4>Corpo da Requisição:</h4>
+                <code>
+{
+  "name": "Espanhol",
+  "code": "es",
+  "flag": "🇪🇸",
+  "vocabularyItems": [
+    {
+      "word": "Libro",
+      "translation": "Livro"
+    },
+    {
+      "word": "Hola",
+      "translation": "Olá"
+    }
+  ]
+}
+                </code>
+            </div>
+        </div>
+    </section>
+
+    <section id="ia" class="section">
+        <h2>Inteligência Artificial (Gemini API)</h2>
+        <p>Endpoints para interações com a API Gemini do Google.</p>
+
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="url">/api/ai/analyze-sentiment</span>
+            <p class="description">Analisa o sentimento de um texto.</p>
+            <div class="parameters">
+                <h4>Corpo da Requisição:</h4>
+                <code>
+{
+  "text": "Estou me sentindo muito triste e desmotivado ultimamente."
+}
+                </code>
+            </div>
+            <div class="response">
+                <h4>Exemplo de Resposta:</h4>
+                <code>
+{
+  "emotionalState": "depression",
+  "analysis": "O texto indica sinais de depressão, com sentimentos de tristeza e desmotivação persistentes."
+}
+                </code>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="url">/api/ai/chat</span>
+            <p class="description">Interage com o chatbot baseado em IA.</p>
+            <div class="parameters">
+                <h4>Corpo da Requisição:</h4>
+                <code>
+{
+  "message": "Pode me recomendar alguns livros para ansiedade?"
+}
+                </code>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <span class="method post">POST</span>
+            <span class="url">/api/ai/recommend</span>
+            <p class="description">Obtém recomendações personalizadas de livros baseadas em um estado emocional.</p>
+            <div class="parameters">
+                <h4>Corpo da Requisição:</h4>
+                <code>
+{
+  "emotionalState": "anxiety",
+  "additionalInfo": "Também gosto de ficção científica."
+}
+                </code>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Social Library. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html> 
